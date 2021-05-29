@@ -7,7 +7,7 @@ const connectDB = (handler) => async (req, res) => {
         return handler(req, res);
     }
     // Use new db connection
-    console.log(mdb, mdb.env.mongodburl);
+    // console.log(mdb, mdb.env.mongodburl);
     await mongoose.connect(mdb.env.mongodburl, {
         useUnifiedTopology: true,
         useFindAndModify: false,
