@@ -1,6 +1,6 @@
-import connectDB from "../utils/mongodb";
+import connectDB from "../../utils/mongodb";
 // import bcrypt from '../../middleware/bcrypt';
-import account from "../utils/models/accounts";
+import account from "../../utils/models/accounts";
 
 const handler = async (req, res) => {
     const acc = new account({ name: "first" });
