@@ -9,7 +9,7 @@ const handler = async (req, res) => {
     // await log__.save();
     const acc = new account({ name: "first" });
     await acc.save();
-    return res.json({ ok: true });
+    return res.json({ ok: true, version: 777 });
 };
 
 export default connectDB(handler);
