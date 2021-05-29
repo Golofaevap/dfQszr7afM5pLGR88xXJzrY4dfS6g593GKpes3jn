@@ -7,11 +7,11 @@ const handler = async (req, res) => {
     console.log("req.body");
     console.log(req.body);
     // console.log(req);
-    // const log__ = new log({ log: JSON.stringify(req.body, null, 5) });
-    // await log__.save();
+    const log__ = new log({ log: JSON.stringify(req.body, null, 5) });
+    await log__.save();
     // const acc = new account({ name: "first" });
     // await acc.save();
-    return res.json({ ok: true, version: 779 });
+    return res.json({ ok: true, version: 780 });
 };
 
 export default connectDB(handler);
