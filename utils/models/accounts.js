@@ -1,15 +1,17 @@
 import mongoose from "mongoose";
 var Schema = mongoose.Schema;
 
-var account = new Schema(
+const MODEL_NAME = "Account";
+
+var accountSchema = new Schema(
     {
         accountId: { type: String, unique: true, required: true },
         name: String,
         // campaigns links
         campaigns: [
             {
-                type: mongoose.Types.ObjectId,
-                ref: "Campaign",
+                type: Schema.Types.ObjectId,
+                ref: "campaign",
             },
         ],
         // quick info
@@ -52,6 +54,8 @@ var account = new Schema(
 
 // mongoose.models = {};
 
-var Account = mongoose.model("Account", account);
+var Account =
+    mongoose.models[MODEL_NAME] ||
+    mongoose.model(MODEL_NAME, accountSchema, "accounts");
 
 export default Account;

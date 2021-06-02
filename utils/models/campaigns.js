@@ -1,14 +1,16 @@
 import mongoose from "mongoose";
 var Schema = mongoose.Schema;
 
-var campaign = new Schema(
+const MODEL_NAME = "Campaign";
+
+var campaignSchema = new Schema(
     {
         campaignId: { type: String, unique: true, required: true },
         name: String,
         // campaigns links
         account: {
-            type: mongoose.Types.ObjectId,
-            ref: "Account",
+            type: Schema.Types.ObjectId,
+            ref: "account",
         },
         budget: Number,
         adGroups: [
@@ -29,6 +31,8 @@ var campaign = new Schema(
 
 // mongoose.models = {};
 
-var Campaign = mongoose.model("Campaign", campaign);
+var Campaign =
+    mongoose.models[MODEL_NAME] ||
+    mongoose.model(MODEL_NAME, campaignSchema, "campaigns");
 
 export default Campaign;

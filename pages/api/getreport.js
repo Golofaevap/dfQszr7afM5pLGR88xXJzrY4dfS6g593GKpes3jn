@@ -1,4 +1,4 @@
-import connectDB from "../../utils/mongodb";
+import createHandler from "../../utils/middleware";
 // import bcrypt from '../../middleware/bcrypt';
 import account from "../../utils/models/accounts";
 import log from "../../utils/models/logs";
@@ -12,7 +12,9 @@ import {
 // console.log(accountCreate);
 const version = 101;
 
-const handler = async (req, res) => {
+const handler = createHandler();
+
+handler.post(async (req, res) => {
     console.log("req.body");
     console.log(req.body);
     const errors = {};
@@ -54,13 +56,13 @@ const handler = async (req, res) => {
         console.log("campaignsIdsList 2", campaignsIdsList);
 
         await accountUpdate(accEntity._id, data.accountInfo, campaignsIdsList);
-        return res.json({ ok: true, version: 781 });
+        return res.json({ ok: true, version: version });
     } catch (error) {
         console.log(error);
         const log__ = new log({ log: JSON.stringify(error, null, 5) });
         await log__.save();
         return res.json({ ok: false, reason: error });
     }
-};
+});
 
 export default connectDB(handler);
