@@ -1,9 +1,9 @@
 // import connectDB from "../../utils/mongodb";
-import createHandler from "../../utils/middleware";
+import createHandler from "../../../utils/middleware";
 // import bcrypt from '../../middleware/bcrypt';
-import account from "../../utils/models/accounts";
-import campaign from "../../utils/models/campaigns";
-import task from "../../utils/models/tasks";
+import account from "../../../utils/models/accounts";
+import campaign from "../../../utils/models/campaigns";
+import task from "../../../utils/models/tasks";
 // import log from "../../utils/models/logs";
 
 const handler = createHandler();
