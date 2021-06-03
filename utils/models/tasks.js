@@ -11,6 +11,8 @@ var taskSchema = new Schema(
         status: String,
         // meta
         dateOfCreation: { type: Date, default: Date.now },
+        execStatus: Number,
+        execLogs: Array,
     },
     { timestamps: true }
 );
