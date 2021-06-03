@@ -18,7 +18,22 @@ handler.post(async (req, res) => {
         const { taskId, statusCode } = body;
 
         const task = await taskModel.findOne({ _id: taskId });
-        task.execStatus = statusCode;
+        if (statusCode === 1) {
+            task.status = "COMPLETED";
+        }
+        if (statusCode === -1) {
+            task.status = "AUTO_REPEAT";
+            task.execStatus += statusCode;
+            if (task.execStatus < -3) {
+                task.status = "AUTO_REPEAT_FAILED";
+            }
+        }
+        if (statusCode === 0) {
+            task.status = "NEED_REVIEW";
+            task.execStatus = statusCode;
+            
+        }
+
         if (!task.execLogs) {
             task.execLogs = [];
         }

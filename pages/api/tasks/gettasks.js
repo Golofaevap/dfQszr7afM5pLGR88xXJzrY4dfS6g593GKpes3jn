@@ -17,7 +17,10 @@ handler.post(async (req, res) => {
         console.log(body, body);
         const { accountId } = body;
         console.log("step1");
-        const tasks = await task.find({ accountId: accountId });
+        const tasks = await task.find({
+            accountId: accountId,
+            status: { $in: ["TO_EXECUTE", "AUTO_REPEAT"] },
+        });
 
         res.status(200).json(tasks);
     } catch (error) {
