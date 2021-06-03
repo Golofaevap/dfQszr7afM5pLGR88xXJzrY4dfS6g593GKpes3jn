@@ -65,4 +65,4 @@ handler.post(async (req, res) => {
     }
 });
 
-export default connectDB(handler);
+export default handler;
