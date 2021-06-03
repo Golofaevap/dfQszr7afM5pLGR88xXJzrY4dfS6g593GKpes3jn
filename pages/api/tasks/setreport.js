@@ -3,7 +3,7 @@ import createHandler from "../../../utils/middleware";
 // import bcrypt from '../../middleware/bcrypt';
 import account from "../../../utils/models/accounts";
 import campaign from "../../../utils/models/campaigns";
-import task from "../../../utils/models/tasks";
+import taskModel from "../../../utils/models/tasks";
 // import log from "../../utils/models/logs";
 
 const handler = createHandler();
@@ -17,7 +17,7 @@ handler.post(async (req, res) => {
         console.log(body, body);
         const { taskId, statusCode } = body;
 
-        const task = await task.findOne({ _id: taskId });
+        const task = await taskModel.findOne({ _id: taskId });
         task.execStatus = statusCode;
         if (!task.execLogs) {
             task.execLogs = [];
