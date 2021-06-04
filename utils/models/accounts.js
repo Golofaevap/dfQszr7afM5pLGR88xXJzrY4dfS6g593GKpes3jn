@@ -16,29 +16,35 @@ var accountSchema = new Schema(
         ],
         // quick info
         // ------ total
-        totalCost: String,
-        totalImpressions: String,
-        totalClicks: String,
-        totalConversions: String,
-        totalViesw: String,
+        totalCost: Number,
+        totalImpressions: Number,
+        totalClicks: Number,
+        totalConversions: Number,
+        totalViesw: Number,
         // ------ today
-        todayCost: String,
-        todayImpressions: String,
-        todayClicks: String,
-        todayConversions: String,
-        todayViesw: String,
+        todayCost: Number,
+        todayImpressions: Number,
+        todayClicks: Number,
+        todayConversions: Number,
+        todayViesw: Number,
         // ------ yesterday
-        yesterdayCost: String,
-        yesterdayImpressions: String,
-        yesterdayClicks: String,
-        yesterdayConversions: String,
-        yesterdayViesw: String,
+        yesterdayCost: Number,
+        yesterdayImpressions: Number,
+        yesterdayClicks: Number,
+        yesterdayConversions: Number,
+        yesterdayViesw: Number,
         // system
         daysInWork: {
             type: Number,
         },
         checkLimitDays: {
             type: Number,
+        },
+        currency: {
+            type: String,
+        },
+        timeZone: {
+            type: String,
         },
         user: {
             type: String,

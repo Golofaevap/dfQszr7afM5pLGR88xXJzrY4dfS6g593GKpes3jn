@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@material-ui/core": "^4.11.4",
+    "@material-ui/icons": "^4.11.2",
     "lodash": "^4.17.21",
     "moment": "^2.29.1",
     "mongoose": "^5.12.12",

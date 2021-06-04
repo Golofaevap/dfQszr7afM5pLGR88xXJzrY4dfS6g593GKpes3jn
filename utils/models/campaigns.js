@@ -12,6 +12,10 @@ var campaignSchema = new Schema(
             type: Schema.Types.ObjectId,
             ref: "account",
         },
+        type: String,
+        isEnabled: {
+            type: bool,
+        },
         budget: Number,
         adGroups: [
             {
@@ -23,6 +27,24 @@ var campaignSchema = new Schema(
                 ],
             },
         ],
+        // ------ total
+        totalCost: Number,
+        totalImpressions: Number,
+        totalClicks: Number,
+        totalConversions: Number,
+        totalViesw: Number,
+        // ------ today
+        todayCost: Number,
+        todayImpressions: Number,
+        todayClicks: Number,
+        todayConversions: Number,
+        todayViesw: Number,
+        // ------ yesterday
+        yesterdayCost: Number,
+        yesterdayImpressions: Number,
+        yesterdayClicks: Number,
+        yesterdayConversions: Number,
+        yesterdayViesw: Number,
         // meta
         dateOfCreation: { type: Date, default: Date.now },
     },

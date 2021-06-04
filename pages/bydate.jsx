@@ -6,6 +6,7 @@ import { useState } from "react";
 // import { TextField } from "@material-ui/core";
 import DatePicker from "react-datepicker";
 import { Button, Grid } from "@material-ui/core";
+import Link from "next/link";
 
 export default function Home() {
     const [accounts, setAccounts] = useState([]);
@@ -78,31 +79,40 @@ export default function Home() {
                 </Grid>
             </div>
             <div>
-                {accounts &&
-                    accounts.map((acc) => {
-                        return (
-                            <div
-                                key={acc._id}
-                                style={{
-                                    boxSizing: "border-box",
-                                    border: "2px solid gray",
-                                    margin: 10,
-                                    padding: 10,
-                                }}
-                            >
-                                <p>{acc.accountId} </p>
-                                <p
-                                    style={{
-                                        fontSize: "80%",
-                                        color: "lightgray",
-                                    }}
-                                >
-                                    created at: {acc.createdAt}
-                                </p>
-                                {/* <pre>{JSON.stringify(acc, 0, 5)}</pre> */}
-                            </div>
-                        );
-                    })}
+                <Grid container>
+                    {accounts &&
+                        accounts.map((acc) => {
+                            return (
+                                <Grid item xs={4}>
+                                    <div
+                                        key={acc._id}
+                                        style={{
+                                            boxSizing: "border-box",
+                                            border: "2px solid gray",
+                                            margin: 10,
+                                            padding: 10,
+                                        }}
+                                    >
+                                        <p>{acc.accountId} </p>
+                                        <p
+                                            style={{
+                                                fontSize: "80%",
+                                                color: "lightgray",
+                                            }}
+                                        >
+                                            created at: {acc.createdAt}
+                                        </p>
+                                        <Link href={`/account/${acc._id}`}>
+                                            <Button variant="outlined">
+                                                Open ads account
+                                            </Button>
+                                        </Link>
+                                        {/* <pre>{JSON.stringify(acc, 0, 5)}</pre> */}
+                                    </div>
+                                </Grid>
+                            );
+                        })}
+                </Grid>
             </div>
         </div>
     );
