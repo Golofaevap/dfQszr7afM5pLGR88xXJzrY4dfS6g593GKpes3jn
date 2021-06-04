@@ -16,6 +16,12 @@ var campaignSchema = new Schema(
         isEnabled: {
             type: Boolean,
         },
+        isPaused: {
+            type: Boolean,
+        },
+        isRemoved: {
+            type: Boolean,
+        },
         budget: Number,
         adGroups: [
             {

@@ -35,6 +35,28 @@ const campaignCreate = async (account, campaignInfo) => {
             account: account._id,
             name: "custom name I added",
             campaignId: campaignInfo.campaignId,
+            type: campaignInfo.type,
+            isEnabled: campaignInfo.isEnabled,
+            budget: campaignInfo.budget,
+
+            // total
+            totalCost: campaignInfo.totalCost,
+            totalImpressions: campaignInfo.totalImpressions,
+            totalClicks: campaignInfo.totalClicks,
+            totalConversions: campaignInfo.totalConversions,
+            totalViesw: campaignInfo.totalViesw,
+            // total
+            todayCost: campaignInfo.todayCost,
+            todayImpressions: campaignInfo.todayImpressions,
+            todayClicks: campaignInfo.todayClicks,
+            todayConversions: campaignInfo.todayConversions,
+            todayViesw: campaignInfo.todayViesw,
+            // total
+            yesterdayCost: campaignInfo.yesterdayCost,
+            yesterdayImpressions: campaignInfo.yesterdayImpressions,
+            yesterdayClicks: campaignInfo.yesterdayClicks,
+            yesterdayConversions: campaignInfo.yesterdayConversions,
+            yesterdayViesw: campaignInfo.yesterdayViesw,
         });
         return await newCampaign.save();
     } catch (error) {

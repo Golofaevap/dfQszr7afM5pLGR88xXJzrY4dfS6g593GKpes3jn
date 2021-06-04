@@ -51,6 +51,9 @@ const accountUpdate = async (accountId, accountInfo, campaignsIdsList) => {
             yesterdayClicks: accountInfo.yesterdayClicks,
             yesterdayConversions: accountInfo.yesterdayConversions,
             yesterdayViesw: accountInfo.yesterdayViesw,
+            //
+            currency: accountInfo.currency,
+            timeZone: accountInfo.timeZone,
         });
         // changeWasMade = updateField(
         //     accEntity,
