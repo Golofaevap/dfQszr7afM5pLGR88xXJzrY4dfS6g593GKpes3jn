@@ -14,7 +14,7 @@ var campaignSchema = new Schema(
         },
         type: String,
         isEnabled: {
-            type: bool,
+            type: Boolean,
         },
         budget: Number,
         adGroups: [
