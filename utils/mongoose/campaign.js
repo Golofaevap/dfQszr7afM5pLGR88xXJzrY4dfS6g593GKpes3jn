@@ -23,6 +23,7 @@ const campaignsSave = async (account, campaigns) => {
             // budget: oneCamp.budget,
             isEnabled: oneCamp.isEnabled,
             budget: oneCamp.budget,
+            currency: oneCamp.currency,
 
             // total
             totalCost: oneCamp.totalCost,

@@ -4,7 +4,7 @@ import AccordionSummary from "@material-ui/core/AccordionSummary";
 import AccordionDetails from "@material-ui/core/AccordionDetails";
 import Typography from "@material-ui/core/Typography";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import { makeStyles } from "@material-ui/core";
+import { Button, makeStyles } from "@material-ui/core";
 
 export function PerformanceForPeriod({ title, clicks, cost }) {
     return (
@@ -107,20 +107,32 @@ export function Campaign({ campaign, classes }) {
             >
                 <Grid container>
                     <Grid item xs={3}>
-                        <Typography
-                            className={classes.heading}
-                            style={{ color: "gray" }}
-                        >
-                            Campaign
-                        </Typography>
                         <Grid container xs={12}>
                             <Grid item xs={3}>
-                                status
+                                <Typography
+                                    className={classes.heading}
+                                    style={{ color: "gray" }}
+                                >
+                                    status
+                                </Typography>
+                                <Typography
+                                    className={classes.heading}
+                                    style={{ color: "gray" }}
+                                >
+                                    {campaign.budget} {campaign.currency}
+                                </Typography>
                             </Grid>
                             <Grid item xs={9}>
+                                <Typography
+                                    className={classes.heading}
+                                    style={{ color: "gray" }}
+                                >
+                                    Campaign
+                                </Typography>
                                 <Typography variant="h6">
                                     {campaign.name}
                                 </Typography>
+                                {campaign.campaignId}
                             </Grid>
                         </Grid>
                     </Grid>
@@ -156,7 +168,20 @@ export function Campaign({ campaign, classes }) {
             <AccordionDetails>
                 <Grid container>
                     <Grid item xs={12}>
-                        {campaign.campaignId}
+                        <Grid container xs={12}>
+                            <Grid item xs={12}>
+                                <Typography>CreateTasks</Typography>
+                                <Button variant="outlined">
+                                    Enable Campaign
+                                </Button>
+                                <Button variant="outlined">
+                                    Pause Campaign
+                                </Button>
+                                <Button variant="outlined">
+                                    Change Budget
+                                </Button>
+                            </Grid>
+                        </Grid>
                     </Grid>
                     <Grid item xs={12}>
                         <Grid container xs={12}>
