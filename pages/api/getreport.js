@@ -16,7 +16,7 @@ const handler = createHandler();
 
 handler.post(async (req, res) => {
     console.log("req.body");
-    console.log(req.body);
+    // console.log(req.body);
     const errors = {};
     if (req.method !== "POST") {
         return res.json({

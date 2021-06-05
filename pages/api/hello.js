@@ -1,5 +1,5 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 
 export default (req, res) => {
-  res.status(200).json({ version: '102' })
+  res.status(200).json({ version: '103' })
 }
