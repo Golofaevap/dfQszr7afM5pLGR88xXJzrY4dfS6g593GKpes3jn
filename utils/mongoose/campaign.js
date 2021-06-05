@@ -20,23 +20,7 @@ const campaignsSave = async (account, campaigns) => {
         isCamp = _.extend(isCamp, {
             name: oneCamp.name,
             //
-            budget: oneCamp.budget,
-            adGroups: oneCamp.adGroups,
-        });
-        await isCamp.save();
-    }
-    console.log("campaignsIdsList", campaignsIdsList);
-    return campaignsIdsList;
-};
-
-const campaignCreate = async (account, campaignInfo) => {
-    console.log("CAMAPIGN INFO", campaignInfo);
-    try {
-        const newCampaign = new campaign({
-            account: account._id,
-            name: "custom name I added",
-            campaignId: campaignInfo.campaignId,
-            type: campaignInfo.type,
+            // budget: oneCamp.budget,
             isEnabled: campaignInfo.isEnabled,
             budget: campaignInfo.budget,
 
@@ -58,6 +42,23 @@ const campaignCreate = async (account, campaignInfo) => {
             yesterdayClicks: campaignInfo.yesterdayClicks,
             yesterdayConversions: campaignInfo.yesterdayConversions,
             yesterdayViesw: campaignInfo.yesterdayViesw,
+
+            adGroups: oneCamp.adGroups,
+        });
+        await isCamp.save();
+    }
+    console.log("campaignsIdsList", campaignsIdsList);
+    return campaignsIdsList;
+};
+
+const campaignCreate = async (account, campaignInfo) => {
+    console.log("CAMAPIGN INFO", campaignInfo);
+    try {
+        const newCampaign = new campaign({
+            account: account._id,
+            name: "custom name I added",
+            campaignId: campaignInfo.campaignId,
+            type: campaignInfo.type,
         });
         return await newCampaign.save();
     } catch (error) {
