@@ -30,6 +30,7 @@ const campaignsSave = async (account, campaigns) => {
 };
 
 const campaignCreate = async (account, campaignInfo) => {
+    console.log("CAMAPIGN INFO", campaignInfo);
     try {
         const newCampaign = new campaign({
             account: account._id,

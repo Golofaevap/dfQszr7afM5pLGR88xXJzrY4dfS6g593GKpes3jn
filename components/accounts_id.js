@@ -4,6 +4,7 @@ import AccordionSummary from "@material-ui/core/AccordionSummary";
 import AccordionDetails from "@material-ui/core/AccordionDetails";
 import Typography from "@material-ui/core/Typography";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import { makeStyles } from "@material-ui/core";
 
 export function PerformanceForPeriod({ title, clicks, cost }) {
     return (
@@ -106,10 +107,22 @@ export function Campaign({ campaign, classes }) {
             >
                 <Grid container>
                     <Grid item xs={3}>
-                        <Typography strong className={classes.heading}>
-                            {" - campaign: "}
-                            {campaign.name}
+                        <Typography
+                            className={classes.heading}
+                            style={{ color: "gray" }}
+                        >
+                            Campaign
                         </Typography>
+                        <Grid container xs={12}>
+                            <Grid item xs={3}>
+                                status
+                            </Grid>
+                            <Grid item xs={9}>
+                                <Typography variant="h6">
+                                    {campaign.name}
+                                </Typography>
+                            </Grid>
+                        </Grid>
                     </Grid>
                     <Grid item xs={3}>
                         <Grid container xs={12}>
