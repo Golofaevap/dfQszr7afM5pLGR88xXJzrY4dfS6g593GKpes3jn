@@ -22,6 +22,8 @@ const campaignsSave = async (account, campaigns) => {
             //
             // budget: oneCamp.budget,
             isEnabled: oneCamp.isEnabled,
+            isPaused: oneCamp.isPaused,
+            isRemoved: oneCamp.isRemoved,
             budget: oneCamp.budget,
             currency: oneCamp.currency,
 

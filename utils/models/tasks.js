@@ -5,7 +5,8 @@ const MODEL_NAME = "Task";
 
 var taskSchema = new Schema(
     {
-        accountId: { type: String, unique: true, required: true },
+        accountId: { type: String, required: true },
+
         entityType: String,
         entityData: Object,
         status: String,

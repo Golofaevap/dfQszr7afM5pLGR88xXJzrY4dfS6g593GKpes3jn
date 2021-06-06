@@ -1,9 +1,9 @@
 // import connectDB from "../../utils/mongodb";
 import createHandler from "../../../utils/middleware";
 // import bcrypt from '../../middleware/bcrypt';
-import account from "../../../utils/models/accounts";
+import accountModel from "../../../utils/models/accounts";
 import campaign from "../../../utils/models/campaigns";
-import task from "../../../utils/models/tasks";
+import taskModel from "../../../utils/models/tasks";
 // import log from "../../utils/models/logs";
 
 const handler = createHandler();
@@ -14,10 +14,11 @@ handler.get(async (req, res) => {
 handler.post(async (req, res) => {
     try {
         const body = req.body;
-        console.log(body, body);
-        const { accountId } = body;
+        console.log("body", body);
+        const { accountId, entityType } = body;
+        // taskType [CAMAPAIGN_CHANGE_STATUS, CAMPAIGN_CHANGE_BUDGET]
         console.log("step1");
-        const acc = await account
+        const acc = await accountModel
             .findOne({ accountId: accountId })
             .populate({ path: "campaigns", model: campaign });
         console.log("step2");
@@ -26,10 +27,29 @@ handler.post(async (req, res) => {
                 .status(404)
                 .json({ ok: false, message: "account do not found" });
         }
-        console.log(acc);
-        const _task = new task({
+        const searchPatern = {
             accountId: accountId,
-            entityType: "CAMPAIGN",
+            entityType: entityType,
+            status: "TO_EXECUTE",
+        };
+        if (body.campaignId) {
+            searchPatern["entityData.campaignId"] = body.campaignId;
+        }
+        const doesSameTaskAlreadyExist = await taskModel.findOne(searchPatern);
+        // console.log("doesSameTaskAlreadyExist", doesSameTaskAlreadyExist);
+        // console.log("searchPatern", searchPatern);
+        // console.log("body", body);
+        if (doesSameTaskAlreadyExist) {
+            return res.status(401).json({
+                ok: false,
+                message:
+                    "Non executed task with similar parameters already exists",
+            });
+        }
+        // console.log(acc);
+        const _task = new taskModel({
+            accountId: accountId,
+            entityType: entityType,
             entityData: body,
             status: "TO_EXECUTE",
         });
@@ -37,9 +57,12 @@ handler.post(async (req, res) => {
 
         const saveResults = await _task.save();
         console.log(saveResults);
-        res.status(200).json(accs);
+        res.status(200).json({ ok: true, message: "task setup successfully" });
     } catch (error) {
         console.log(error);
+        return res
+            .status(500)
+            .json({ ok: false, message: "internal error", error: error });
     }
 });
 

@@ -172,6 +172,8 @@ export default function Index(props) {
                 </Accordion>
                 {account.campaigns &&
                     account.campaigns.map((campaign) => {
+                        campaign.currency = account.currency;
+                        campaign.accountId = account.accountId;
                         return (
                             <Campaign
                                 key={campaign.campaignId}
