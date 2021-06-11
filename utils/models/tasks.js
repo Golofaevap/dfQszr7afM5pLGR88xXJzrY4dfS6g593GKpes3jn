@@ -12,7 +12,7 @@ var taskSchema = new Schema(
         status: String,
         // meta
         dateOfCreation: { type: Date, default: Date.now },
-        execStatus: Number,
+        execStatus: { type: Number, default: 0 },
         execLogs: Array,
     },
     { timestamps: true }
@@ -20,8 +20,6 @@ var taskSchema = new Schema(
 
 // mongoose.models = {};
 
-var Task =
-    mongoose.models[MODEL_NAME] ||
-    mongoose.model(MODEL_NAME, taskSchema, "tasks");
+var Task = mongoose.models[MODEL_NAME] || mongoose.model(MODEL_NAME, taskSchema, "tasks");
 
 export default Task;

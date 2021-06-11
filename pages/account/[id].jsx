@@ -8,12 +8,10 @@ import AccordionDetails from "@material-ui/core/AccordionDetails";
 import Typography from "@material-ui/core/Typography";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 // ******************************
-import {
-    Campaign,
-    AdGroup,
-    Ad,
-    PerformanceForPeriod,
-} from "../../components/accounts_id.js";
+import { Campaign } from "../../components/accounts_id.js";
+import { PerformanceForPeriod } from "../../components/account_id/StatElements.jsx";
+import { Button } from "@material-ui/core";
+import { TaskAccordion } from "../../components/accounts_id_tasks.jsx";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -170,6 +168,7 @@ export default function Index(props) {
                         </Grid>
                     </AccordionDetails>
                 </Accordion>
+                <TaskAccordion classes={classes} account={account} />
                 {account.campaigns &&
                     account.campaigns.map((campaign) => {
                         campaign.currency = account.currency;

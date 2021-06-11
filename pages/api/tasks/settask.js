@@ -16,7 +16,7 @@ handler.post(async (req, res) => {
         const body = req.body;
         console.log("body", body);
         const { accountId, entityType } = body;
-        // taskType [CAMAPAIGN_CHANGE_STATUS, CAMPAIGN_CHANGE_BUDGET]
+        // entityType [CAMAPAIGN_CHANGE_STATUS, CAMPAIGN_CHANGE_BUDGET, CAMPAIGN_CREATE_ONLY, CAMPAIGN_ADD_AD_GROUP, CAMPAIGN_SET_LOCATION]
         console.log("step1");
         const acc = await accountModel
             .findOne({ accountId: accountId })

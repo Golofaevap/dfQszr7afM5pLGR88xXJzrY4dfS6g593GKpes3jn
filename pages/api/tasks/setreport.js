@@ -20,6 +20,7 @@ handler.post(async (req, res) => {
         const task = await taskModel.findOne({ _id: taskId });
         if (statusCode === 1) {
             task.status = "COMPLETED";
+            task.execStatus = statusCode;
         }
         if (statusCode === -1) {
             task.status = "AUTO_REPEAT";
