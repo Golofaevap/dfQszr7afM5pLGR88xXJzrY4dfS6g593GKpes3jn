@@ -23,9 +23,10 @@ import FormControl from "@material-ui/core/FormControl";
 // *******************************************************************
 import { PerformanceForPeriod } from "./StatElements.jsx";
 import { Ad } from "./Ad.jsx";
+import { GroupTasks } from "./tasks/GroupTasks.jsx";
 // ************************************************
 
-export function AdGroup({ adGroup, classes }) {
+export function AdGroup({ adGroup, classes, tasks }) {
     return (
         <Accordion style={{ backgroundColor: "rgb(240,240,240)" }}>
             <AccordionSummary
@@ -34,9 +35,7 @@ export function AdGroup({ adGroup, classes }) {
                 aria-controls="panel1a-content"
                 id="panel1a-header"
             >
-                <Typography className={classes.heading}>
-                    Ad Group : {adGroup.adGroupId}
-                </Typography>
+                <Typography className={classes.heading}>Ad Group : {adGroup.adGroupId}</Typography>
             </AccordionSummary>
             <AccordionDetails>
                 <Grid container>
@@ -44,15 +43,13 @@ export function AdGroup({ adGroup, classes }) {
                         <Typography>{adGroup.adGroupId}</Typography>
                     </Grid>
                     <Grid item xs={12}>
+                        <GroupTasks adGroup={adGroup} tasks={tasks} />
+                    </Grid>
+
+                    <Grid item xs={12}>
                         {adGroup.ads &&
                             adGroup.ads.map((ad) => {
-                                return (
-                                    <Ad
-                                        key={ad.adId}
-                                        ad={ad}
-                                        classes={classes}
-                                    />
-                                );
+                                return <Ad key={ad.adId} ad={ad} classes={classes} />;
                             })}
                     </Grid>
                 </Grid>

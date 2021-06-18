@@ -24,14 +24,10 @@ export default function Home() {
                 }}
             >
                 <h2>Select date range</h2>
-                <Grid container xs={12}>
+                <Grid container>
                     <Grid item xs={4}>
                         <div>Start Date</div>
-                        <DatePicker
-                            style={{ width: "400px", margin: "5%" }}
-                            selected={startDate}
-                            onChange={(date) => setStartDate(date)}
-                        />
+                        <DatePicker style={{ width: "400px", margin: "5%" }} selected={startDate} onChange={(date) => setStartDate(date)} />
                     </Grid>
 
                     <Grid item xs={4}>
@@ -51,19 +47,16 @@ export default function Home() {
                     <Grid item xs={4}>
                         <Button
                             onClick={async () => {
-                                const resp = await fetch(
-                                    "/api/accounts/getaccountsbydate",
-                                    {
-                                        method: "POST",
-                                        body: JSON.stringify({
-                                            startDate,
-                                            endDate,
-                                        }),
-                                        headers: {
-                                            "Content-Type": "application/json",
-                                        },
-                                    }
-                                );
+                                const resp = await fetch("/api/accounts/getaccountsbydate", {
+                                    method: "POST",
+                                    body: JSON.stringify({
+                                        startDate,
+                                        endDate,
+                                    }),
+                                    headers: {
+                                        "Content-Type": "application/json",
+                                    },
+                                });
 
                                 const data = await resp.json();
                                 console.log(data);
@@ -83,7 +76,7 @@ export default function Home() {
                     {accounts &&
                         accounts.map((acc) => {
                             return (
-                                <Grid item xs={4}>
+                                <Grid item xs={4} key={acc.accountId}>
                                     <div
                                         key={acc._id}
                                         style={{
@@ -103,9 +96,7 @@ export default function Home() {
                                             created at: {acc.createdAt}
                                         </p>
                                         <Link href={`/account/${acc._id}`}>
-                                            <Button variant="outlined">
-                                                Open ads account
-                                            </Button>
+                                            <Button variant="outlined">Open ads account</Button>
                                         </Link>
                                         {/* <pre>{JSON.stringify(acc, 0, 5)}</pre> */}
                                     </div>

@@ -26,6 +26,7 @@ var campaignSchema = new Schema(
         adGroups: [
             {
                 adGroupId: String,
+                name: String,
                 ads: [
                     {
                         type: Object,
@@ -59,8 +60,6 @@ var campaignSchema = new Schema(
 
 // mongoose.models = {};
 
-var Campaign =
-    mongoose.models[MODEL_NAME] ||
-    mongoose.model(MODEL_NAME, campaignSchema, "campaigns");
+var Campaign = mongoose.models[MODEL_NAME] || mongoose.model(MODEL_NAME, campaignSchema, "campaigns");
 
 export default Campaign;

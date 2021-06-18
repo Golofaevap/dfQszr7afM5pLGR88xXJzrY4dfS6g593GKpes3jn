@@ -11,7 +11,11 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import { Campaign } from "../../components/accounts_id.js";
 import { PerformanceForPeriod } from "../../components/account_id/StatElements.jsx";
 import { Button } from "@material-ui/core";
-import { TaskAccordion } from "../../components/accounts_id_tasks.jsx";
+import { TaskAccordion } from "../../components/account_id/tasks/AccountTasks.jsx";
+import { useEffect, useState } from "react";
+import { StickyContainer, Sticky } from "react-sticky";
+// import "react-sticky-header/styles.css";
+// import StickyHeader from "react-sticky-header";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -58,146 +62,138 @@ export default function Index(props) {
     // console.log(props);
     const { account } = props;
     const classes = useStyles();
+    const [tasks, setTasks] = useState();
+
+    useEffect(async () => {
+        if (account.accountId) {
+            const resp = await fetch("/api/tasks/gettasksbyid", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ accountId: account.accountId }),
+            });
+            const _tasks = await resp.json();
+            console.log(_tasks);
+            setTasks(_tasks);
+        }
+    }, [account.accountId]);
     return (
         <div>
-            <h1>{account.accountId}</h1>
-            <div className={classes.root}>
-                <Accordion>
-                    <AccordionSummary
-                        expandIcon={<ExpandMoreIcon />}
-                        aria-controls="panel1a-content"
-                        id="panel1a-header"
-                    >
-                        <Grid container>
-                            <Grid item xs={3}>
-                                <Typography className={classes.heading}>
-                                    <strong>Account Info</strong>
-                                </Typography>
-                                <Typography
-                                    variant="h6"
-                                    className={classes.subheading}
-                                >
-                                    {account._id}
-                                </Typography>
-                            </Grid>
-                            <Grid item xs={3}>
-                                <PerformanceForPeriod
-                                    title="ALL TIME"
-                                    clicks={account.totalClicks}
-                                    cost={account.totalCost}
-                                />
-                            </Grid>
-                            <Grid item xs={3}>
-                                <Grid container>
-                                    <PerformanceForPeriod
-                                        title="TODAY"
-                                        clicks={account.todayClicks}
-                                        cost={account.todayCost}
-                                    />
-                                </Grid>
-                            </Grid>
-                            <Grid item xs={3}>
-                                <Grid container>
-                                    <PerformanceForPeriod
-                                        title="YESTERDAY"
-                                        clicks={account.yesterdayClicks}
-                                        cost={account.yesterdayCost}
-                                    />
-                                </Grid>
-                            </Grid>
-                        </Grid>
-                    </AccordionSummary>
-                    <AccordionDetails style={{ backgroundColor: "whitesmoke" }}>
-                        <Grid container>
-                            <Grid item xs={3}>
-                                BUTTONS
-                            </Grid>
-                            <Grid item xs={3}>
-                                <Grid container xs={12}>
-                                    <Grid item xs={12}>
-                                        Days in work: {account.daysInWork}
-                                    </Grid>
-                                    <Grid item xs={12}>
-                                        Check Limit Days:{" "}
-                                        {account.checkLimitDays}
-                                    </Grid>
-                                    <Grid item xs={12}>
-                                        {account.daysInWork <
-                                        account.checkLimitDays
-                                            ? "Ok"
-                                            : "Stopped"}
-                                    </Grid>
-                                </Grid>
-                            </Grid>
-                            <Grid item xs={3}>
-                                <Grid container>
-                                    <Grid item xs={12}>
-                                        Days in work: {account.daysInWork}
-                                    </Grid>
-                                    <Grid item xs={12}>
-                                        Check Limit Days:{" "}
-                                        {account.checkLimitDays}
-                                    </Grid>
-                                    <Grid item xs={12}>
-                                        {account.daysInWork <
-                                        account.checkLimitDays
-                                            ? "Ok"
-                                            : "Stopped"}
-                                    </Grid>
-                                </Grid>
-                            </Grid>
-                            <Grid item xs={3}>
-                                <Grid container>
-                                    <Grid item xs={12}>
-                                        YESTERDAY
-                                    </Grid>
-                                    <Grid item xs={12}>
-                                        Clicks:{" "}
-                                        {account.totalClicks
-                                            ? account.totalClicks
-                                            : "0"}
-                                    </Grid>
-                                    <Grid item xs={12}>
-                                        Cost:{" "}
-                                        {account.totalCost
-                                            ? account.totalCost
-                                            : "0"}
-                                    </Grid>
-                                </Grid>
-                            </Grid>
-                        </Grid>
-                    </AccordionDetails>
-                </Accordion>
-                <TaskAccordion classes={classes} account={account} />
-                {account.campaigns &&
-                    account.campaigns.map((campaign) => {
-                        campaign.currency = account.currency;
-                        campaign.accountId = account.accountId;
-                        return (
-                            <Campaign
-                                key={campaign.campaignId}
-                                campaign={campaign}
-                                classes={classes}
-                            />
-                        );
-                    })}
+            <StickyContainer>
+                {/* Other elements can be in between `StickyContainer` and `Sticky`,
+        but certain styles can break the positioning logic used. */}
+                <Sticky>
+                    {({
+                        style,
 
-                <Accordion>
-                    <AccordionSummary
-                        expandIcon={<ExpandMoreIcon />}
-                        aria-controls="panel3a-content"
-                        id="panel3a-header"
-                    >
-                        <Typography className={classes.heading}>
-                            Full JSON
-                        </Typography>
-                    </AccordionSummary>
-                    <AccordionDetails>
-                        <pre>{JSON.stringify(props, 0, 5)}</pre>
-                    </AccordionDetails>
-                </Accordion>
-            </div>
-            {/* <Link href="/bydate">All account by date</Link> */}
+                        // the following are also available but unused in this example
+                        isSticky,
+                        wasSticky,
+                        distanceFromTop,
+                        distanceFromBottom,
+                        calculatedHeight,
+                    }) => (
+                        <header style={{ ...style, zIndex: 1000, backgroundColor: "white", borderBottom: "1px solid black" }}>
+                            <h1>{account.accountId}</h1>
+                        </header>
+                    )}
+                </Sticky>
+
+                <div className={classes.root}>
+                    <Accordion>
+                        <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls="panel1a-content" id="panel1a-header">
+                            <Grid container>
+                                <Grid item xs={3}>
+                                    <Typography className={classes.heading}>
+                                        <strong>Account Info</strong>
+                                    </Typography>
+                                    <Typography variant="h6" className={classes.subheading}>
+                                        {account._id}
+                                    </Typography>
+                                </Grid>
+                                <Grid item xs={3}>
+                                    <PerformanceForPeriod title="ALL TIME" clicks={account.totalClicks} cost={account.totalCost} />
+                                </Grid>
+                                <Grid item xs={3}>
+                                    <Grid container>
+                                        <PerformanceForPeriod title="TODAY" clicks={account.todayClicks} cost={account.todayCost} />
+                                    </Grid>
+                                </Grid>
+                                <Grid item xs={3}>
+                                    <Grid container>
+                                        <PerformanceForPeriod title="YESTERDAY" clicks={account.yesterdayClicks} cost={account.yesterdayCost} />
+                                    </Grid>
+                                </Grid>
+                            </Grid>
+                        </AccordionSummary>
+                        <AccordionDetails style={{ backgroundColor: "whitesmoke" }}>
+                            <Grid container>
+                                <Grid item xs={3}>
+                                    BUTTONS
+                                </Grid>
+                                <Grid item xs={3}>
+                                    <Grid container>
+                                        <Grid item xs={12}>
+                                            Days in work: {account.daysInWork}
+                                        </Grid>
+                                        <Grid item xs={12}>
+                                            Check Limit Days: {account.checkLimitDays}
+                                        </Grid>
+                                        <Grid item xs={12}>
+                                            {account.daysInWork < account.checkLimitDays ? "Ok" : "Stopped"}
+                                        </Grid>
+                                    </Grid>
+                                </Grid>
+                                <Grid item xs={3}>
+                                    <Grid container>
+                                        <Grid item xs={12}>
+                                            Days in work: {account.daysInWork}
+                                        </Grid>
+                                        <Grid item xs={12}>
+                                            Check Limit Days: {account.checkLimitDays}
+                                        </Grid>
+                                        <Grid item xs={12}>
+                                            {account.daysInWork < account.checkLimitDays ? "Ok" : "Stopped"}
+                                        </Grid>
+                                    </Grid>
+                                </Grid>
+                                <Grid item xs={3}>
+                                    <Grid container>
+                                        <Grid item xs={12}>
+                                            YESTERDAY
+                                        </Grid>
+                                        <Grid item xs={12}>
+                                            Clicks: {account.totalClicks ? account.totalClicks : "0"}
+                                        </Grid>
+                                        <Grid item xs={12}>
+                                            Cost: {account.totalCost ? account.totalCost : "0"}
+                                        </Grid>
+                                    </Grid>
+                                </Grid>
+                            </Grid>
+                        </AccordionDetails>
+                    </Accordion>
+                    <TaskAccordion classes={classes} account={account} tasks={tasks} />
+                    {account.campaigns &&
+                        account.campaigns.map((campaign) => {
+                            campaign.currency = account.currency;
+                            campaign.accountId = account.accountId;
+
+                            return <Campaign key={campaign.campaignId} campaign={campaign} classes={classes} tasks={tasks} />;
+                        })}
+
+                    <Accordion>
+                        <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls="panel3a-content" id="panel3a-header">
+                            <Typography className={classes.heading}>Full JSON</Typography>
+                        </AccordionSummary>
+                        <AccordionDetails>
+                            <pre>{JSON.stringify(props, 0, 5)}</pre>
+                        </AccordionDetails>
+                    </Accordion>
+                </div>
+                {/* <Link href="/bydate">All account by date</Link> */}
+            </StickyContainer>
         </div>
     );
 }

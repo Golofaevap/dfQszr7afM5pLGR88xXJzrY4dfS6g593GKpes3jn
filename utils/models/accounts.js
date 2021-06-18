@@ -8,6 +8,8 @@ var accountSchema = new Schema(
         accountId: { type: String, unique: true, required: true },
         name: String,
         // campaigns links
+        limitManual: { type: Number, default: 0 },
+        limitAPI: { type: Number, default: 0 },
         campaigns: [
             {
                 type: Schema.Types.ObjectId,
@@ -60,8 +62,6 @@ var accountSchema = new Schema(
 
 // mongoose.models = {};
 
-var Account =
-    mongoose.models[MODEL_NAME] ||
-    mongoose.model(MODEL_NAME, accountSchema, "accounts");
+var Account = mongoose.models[MODEL_NAME] || mongoose.model(MODEL_NAME, accountSchema, "accounts");
 
 export default Account;

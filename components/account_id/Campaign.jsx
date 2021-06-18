@@ -30,7 +30,7 @@ import { TaskWrapper } from "./tasks/TaskWrapper.jsx";
 //     return <div>YEs</div>
 // }
 
-export function Campaign({ campaign, classes }) {
+export function Campaign({ campaign, classes, tasks }) {
     const [showStatusChangeDialog, setShowStatusChangeDialog] = useState(false);
     const [showBudgetChangeDialog, setShowBudgetChangeDialog] = useState(false);
     const [newCampaignStatus, setNewCampaignStatus] = useState("NONE");
@@ -45,7 +45,7 @@ export function Campaign({ campaign, classes }) {
             >
                 <Grid container>
                     <Grid item xs={3}>
-                        <Grid container xs={12}>
+                        <Grid container>
                             <Grid item xs={3}>
                                 <Typography className={classes.heading} style={{ color: "gray" }}>
                                     status
@@ -64,7 +64,7 @@ export function Campaign({ campaign, classes }) {
                         </Grid>
                     </Grid>
                     <Grid item xs={3}>
-                        <Grid container xs={12}>
+                        <Grid container>
                             <PerformanceForPeriod title="All Time" clicks={campaign.totalClicks} cost={campaign.totalCost} />
                         </Grid>
                     </Grid>
@@ -83,15 +83,16 @@ export function Campaign({ campaign, classes }) {
             <AccordionDetails>
                 <Grid container>
                     <Grid item xs={12}>
-                        <CapmaignTasks campaign={campaign} />
+                        <CapmaignTasks campaign={campaign} tasks={tasks} />
                     </Grid>
                     <Grid item xs={12}>
-                        <Grid container xs={12}>
+                        <Grid container>
                             <Grid item xs={12}></Grid>
                         </Grid>
                         {campaign.adGroups &&
                             campaign.adGroups.map((adGroup) => {
-                                return <AdGroup key={adGroup.adGroupId} adGroup={adGroup} classes={classes} />;
+                                adGroup.accountId = campaign.accountId;
+                                return <AdGroup key={adGroup.adGroupId} adGroup={adGroup} classes={classes} tasks={tasks} />;
                             })}
                     </Grid>
                 </Grid>

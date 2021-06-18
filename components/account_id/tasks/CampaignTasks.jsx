@@ -1,26 +1,16 @@
 import Grid from "@material-ui/core/Grid";
-import Accordion from "@material-ui/core/Accordion";
-import AccordionSummary from "@material-ui/core/AccordionSummary";
-import AccordionDetails from "@material-ui/core/AccordionDetails";
 import Typography from "@material-ui/core/Typography";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import { Button, makeStyles, TextField } from "@material-ui/core";
 import { useEffect, useState } from "react";
-
-// import { makeStyles } from '@material-ui/core/styles';
-// import IconButton from '@material-ui/core/IconButton';
-// import Input from '@material-ui/core/Input';
-// import FilledInput from '@material-ui/core/FilledInput';
 import OutlinedInput from "@material-ui/core/OutlinedInput";
 import InputLabel from "@material-ui/core/InputLabel";
 import InputAdornment from "@material-ui/core/InputAdornment";
-// import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from "@material-ui/core/FormControl";
-// import TextField from '@material-ui/core/TextField';
-// import Visibility from '@material-ui/icons/Visibility';
-// import VisibilityOff from '@material-ui/icons/VisibilityOff';
+import getLocations from "../../../utils/enums/locations";
+
 // *******************************************************************
 import { TaskWrapper } from "./TaskWrapper";
+import { NavButton, TasksList } from "./utils";
 // *******************************************************************
 
 const useStyles = makeStyles((theme) => ({
@@ -49,43 +39,12 @@ const useStyles2 = makeStyles((theme) => ({
     },
 }));
 
-const locations = [
-    { code: "2040", name: "Austria", shortCode: "AT" },
-    { code: "2196", name: "Cyprus", shortCode: "CY" },
-    { code: "2203", name: "Czechia", shortCode: "CZ" },
-    { code: "2276", name: "Germany", shortCode: "DE" },
-    { code: "2300", name: "Greece", shortCode: "GR" },
-    { code: "2348", name: "Hungary", shortCode: "HU" },
-    { code: "2380", name: "Italy", shortCode: "IT" },
-    { code: "2616", name: "Poland", shortCode: "PL" },
-    { code: "2620", name: "Portugal", shortCode: "PT" },
-    { code: "2642", name: "Romania", shortCode: "RO" },
-    { code: "2703", name: "Slovakia", shortCode: "SK" },
-    { code: "2724", name: "Spain", shortCode: "ES" },
-    { code: "20277", name: "Canary Islands", shortCode: "ES" },
-    { code: "2643", name: "Russia", shortCode: "RU" },
-    { code: "2840", name: "United States", shortCode: "US" },
-];
+const locations = getLocations();
 
-function NavButton({ cls, menuItem, setMenuItem, title, code }) {
-    return (
-        <div className={cls.buttonDiv}>
-            <Button
-                color={menuItem === code ? "primary" : "default"}
-                variant={menuItem === code ? "contained" : "text"}
-                onClick={() => {
-                    setMenuItem(code);
-                }}
-            >
-                {title}
-            </Button>
-        </div>
-    );
-}
-
-export function CapmaignTasks({ campaign }) {
+export function CapmaignTasks({ campaign, tasks }) {
     const cls = useStyles();
     const [menuItem, setMenuItem] = useState("");
+    if (tasks) tasks = tasks.filter((task) => task.entityData.campaignId === campaign.campaignId);
     return (
         <TaskWrapper>
             <Grid container>
@@ -94,7 +53,7 @@ export function CapmaignTasks({ campaign }) {
                     <NavButton cls={cls} menuItem={menuItem} setMenuItem={setMenuItem} title="Change Budget" code="CHANGE_BUDGET" />
                     <NavButton cls={cls} menuItem={menuItem} setMenuItem={setMenuItem} title="Enable / Pause" code="ENABLE_PAUSE" />
                     <NavButton cls={cls} menuItem={menuItem} setMenuItem={setMenuItem} title="Add / Exclude Locations" code="LOCATIONS" />
-                    <NavButton cls={cls} menuItem={menuItem} setMenuItem={setMenuItem} title="Create Add Group Only" code="CREATE_AD_GROUP" />
+                    <NavButton cls={cls} menuItem={menuItem} setMenuItem={setMenuItem} title="Create Ad Group Only" code="CREATE_AD_GROUP" />
                 </Grid>
                 <Grid
                     item
@@ -105,10 +64,11 @@ export function CapmaignTasks({ campaign }) {
                     }}
                 >
                     <Grid container>
+                        {menuItem === "" && <TasksList tasks={tasks} />}
                         {menuItem === "ENABLE_PAUSE" && <ChangeStatusCampaign campaign={campaign} classes={cls} />}
                         {menuItem === "CHANGE_BUDGET" && <ChangeBudgetCampaign campaign={campaign} classes={cls} />}
                         {menuItem === "LOCATIONS" && <AddLocationOptionsCampaign campaign={campaign} classes={cls} />}
-                        {menuItem === "CREATE_AD_GROUP" && <CreateAddGroup campaign={campaign} classes={cls} />}
+                        {menuItem === "CREATE_AD_GROUP" && <CreateAdGroup campaign={campaign} classes={cls} />}
                     </Grid>
                 </Grid>
             </Grid>
@@ -146,7 +106,7 @@ export function ChangeStatusCampaign({ campaign, classes }) {
                 <Typography className={classes.heading} style={{ color: "red" }}>
                     {message}
                 </Typography>
-                <Grid container xs={12}>
+                <Grid container>
                     <Grid item xs={4}>
                         <Typography className={classes.heading} style={{ color: "gray" }}>
                             Current status
@@ -259,7 +219,7 @@ export function ChangeBudgetCampaign({ campaign, classes }) {
                     Change Budget
                 </Typography>
                 <Typography style={{ color: "red" }}>{message}</Typography>
-                <Grid container xs={12}>
+                <Grid container>
                     <Grid item xs={4}>
                         <Typography className={classes.heading} style={{ color: "gray" }}>
                             Current budget
@@ -433,6 +393,7 @@ export function AddLocationOptionsCampaign({ campaign, classes }) {
                                 locations.map((loc) => {
                                     return (
                                         <Button
+                                            key={loc.code}
                                             onClick={() => {
                                                 const inLoc = form.inLoc ? form.inLoc : [];
                                                 const index = inLoc.indexOf(loc.code);
@@ -467,6 +428,7 @@ export function AddLocationOptionsCampaign({ campaign, classes }) {
                                 locations.map((loc) => {
                                     return (
                                         <Button
+                                            key={loc.code}
                                             onClick={() => {
                                                 const exLoc = form.exLoc ? form.exLoc : [];
                                                 const index = exLoc.indexOf(loc.code);
@@ -550,7 +512,7 @@ export function AddLocationOptionsCampaign({ campaign, classes }) {
     // CAMPAIGN_SET_LOCATION
 }
 
-export function CreateAddGroup({ campaign, classes }) {
+export function CreateAdGroup({ campaign, classes }) {
     // , newCampaignStatus, setNewCampaignStatus, setShowDialog
     const initialForm = {
         name: "Ad Group - 1.",

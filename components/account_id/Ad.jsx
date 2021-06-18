@@ -24,7 +24,6 @@ import FormControl from "@material-ui/core/FormControl";
 import { PerformanceForPeriod } from "./StatElements.jsx";
 // ******************************************************************
 
-
 export function Ad({ ad, classes }) {
     return (
         <Accordion style={{ backgroundColor: "rgb(230,230,230)" }}>
@@ -34,12 +33,10 @@ export function Ad({ ad, classes }) {
                 aria-controls="panel1a-content"
                 id="panel1a-header"
             >
-                <Typography className={classes.heading}>
-                    Ad : {ad.adId}
-                </Typography>
+                <Typography className={classes.heading}>Ad : {ad.adId}</Typography>
             </AccordionSummary>
             <AccordionDetails>
-                <pre>{JSON.stringify(ad, 0, 5)}</pre>
+                <pre style={{ wordWrap: "break-word", overflowY: "auto" }}>{JSON.stringify(ad, 0, 5)}</pre>
             </AccordionDetails>
         </Accordion>
     );
