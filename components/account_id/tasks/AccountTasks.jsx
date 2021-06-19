@@ -81,7 +81,7 @@ export function TaskAccordion({ classes, account, tasks }) {
                         {menuItem === "" && <TasksList tasks={tasks} />}
 
                         {menuItem === "CREATE_CAMPAIGN" && <CreateCampaignOnlyForm classes={cls} account={account} />}
-                        {menuItem === "SETTINGS" && <SetAddInfoToAccount accountId={account._id} />}
+                        {menuItem === "SETTINGS" && <SetAddInfoToAccount account={account} />}
                         {/* {menuItem === "CHANGE_BUDGET" && <ChangeBudgetCampaign campaign={campaign} classes={cls} />}
                         {menuItem === "LOCATIONS" && <AddLocationOptionsCampaign campaign={campaign} classes={cls} />}
                         {menuItem === "CREATE_AD_GROUP" && <CreateAddGroup campaign={campaign} classes={cls} />} */}
@@ -342,10 +342,11 @@ export function CreateCampaignOnlyForm({ account, setView }) {
 
 export function AddLocationToCampaign({ account, campaign, setView }) {}
 
-export function SetAddInfoToAccount({ accountId }) {
-    console.log("account id ", accountId);
+export function SetAddInfoToAccount({ account }) {
+    const accountId = account._id;
     const initialForm = {
-        user: "",
+        user: account.user ? account.user : "",
+        limit: account.limitManual ? account.limitManual : 0,
     };
     const [form, setForm] = useState(initialForm);
     const handleChangeText = (prop) => (event) => {
@@ -362,6 +363,15 @@ export function SetAddInfoToAccount({ accountId }) {
                         fieldName="user"
                         label="Samara Session, Gmail User"
                         accountId={accountId}
+                        type="text"
+                    />
+                    <EditSaveGroup
+                        value={form.limit}
+                        handleChangeText={handleChangeText}
+                        fieldName="limit"
+                        label="Budget Limit (Manual)"
+                        accountId={accountId}
+                        type="number"
                     />
                 </Grid>
             </Grid>

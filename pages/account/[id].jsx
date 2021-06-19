@@ -95,7 +95,19 @@ export default function Index(props) {
                         calculatedHeight,
                     }) => (
                         <header style={{ ...style, zIndex: 1000, backgroundColor: "white", borderBottom: "1px solid black" }}>
-                            <h1>{account.accountId}</h1>
+                            <Grid container>
+                                <Grid item xs={4}>
+                                    <h1>{account.accountId}</h1>
+                                </Grid>
+                                <Grid item xs={4}>
+                                    <p>User: {account.user}</p>
+                                </Grid>
+                                <Grid item xs={4}>
+                                    <p>
+                                        Limits: {account.limitAPI} / {account.limitManual} {account.currency}
+                                    </p>
+                                </Grid>
+                            </Grid>
                         </header>
                     )}
                 </Sticky>

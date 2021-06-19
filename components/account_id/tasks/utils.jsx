@@ -97,12 +97,19 @@ export function TasksList({ tasks }) {
     );
 }
 
-export function EditSaveGroup({ value, handleChangeText, fieldName, label, accountId }) {
+export function EditSaveGroup({ value, handleChangeText, fieldName, label, accountId, type }) {
     console.log("EditSaveGroup", accountId);
     return (
-        <Grid container>
+        <Grid container style={{ marginTop: 15 }}>
             <Grid item xs={8}>
-                <TextField value={value} onChange={handleChangeText(fieldName)} fullWidth label={label} variant="outlined" />
+                <TextField
+                    type={type ? type : "text"}
+                    value={value}
+                    onChange={handleChangeText(fieldName)}
+                    fullWidth
+                    label={label}
+                    variant="outlined"
+                />
             </Grid>
             <Grid item xs={4}>
                 <Button
@@ -118,6 +125,9 @@ export function EditSaveGroup({ value, handleChangeText, fieldName, label, accou
                                 newValue: value,
                                 accId: accountId,
                             }),
+                            headers: {
+                                "Content-Type": "application/json",
+                            },
                         });
                         const jsonBody = await resp.json();
                         console.log(jsonBody);

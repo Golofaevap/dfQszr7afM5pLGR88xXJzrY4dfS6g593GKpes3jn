@@ -12,7 +12,7 @@ const handler = createHandler();
 handler.post(async (req, res) => {
     try {
         console.log("POST edit");
-        const { accId, newValue, operation } = JSON.parse(req.body);
+        const { accId, newValue, operation } = req.body;
         console.log(accId, req.body, newValue, operation);
         let acc = await accountModel.findOne({ _id: accId });
         if (!acc) {
@@ -20,10 +20,15 @@ handler.post(async (req, res) => {
         }
         if (operation === "user") {
             acc = _.extend(acc, { user: newValue });
+            await acc.save();
 
-            res.status(200).json({ ok: true, message: "Saved successfully!" });
-        }
-        res.status(400).json({ ok: false, error: "operation not found" });
+            return res.status(200).json({ ok: true, message: "Saved successfully!" });
+        } else if (operation === "limit") {
+            acc = _.extend(acc, { limitManual: Number(newValue) });
+            await acc.save();
+
+            return res.status(200).json({ ok: true, message: "Saved successfully!" });
+        } else res.status(400).json({ ok: false, error: "operation not found" });
     } catch (error) {
         console.log(error);
         res.status(500).json({ ok: false, error: error });
