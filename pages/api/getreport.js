@@ -1,6 +1,6 @@
 import createHandler from "../../utils/middleware";
 // import bcrypt from '../../middleware/bcrypt';
-import account from "../../utils/models/accounts";
+import account from "../../utils/models/googleAdsAccounts";
 import log from "../../utils/models/logs";
 // utils
 import { accountCreate, accountUpdate } from "../../utils/mongoose/account.js";

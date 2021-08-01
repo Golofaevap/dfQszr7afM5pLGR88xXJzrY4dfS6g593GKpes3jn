@@ -1,7 +1,7 @@
 // import connectDB from "../../utils/mongodb";
 import createHandler from "../../../utils/middleware";
 // import bcrypt from '../../middleware/bcrypt';
-import account from "../../../utils/models/accounts";
+import account from "../../../utils/models/googleAdsAccounts";
 import campaign from "../../../utils/models/campaigns";
 import taskModel from "../../../utils/models/tasks";
 // import log from "../../utils/models/logs";

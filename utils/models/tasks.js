@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 var Schema = mongoose.Schema;
 
 const MODEL_NAME = "Task";
+const COLLECTION_NAME = "tasks";
 
 var taskSchema = new Schema(
     {
@@ -20,6 +21,6 @@ var taskSchema = new Schema(
 
 // mongoose.models = {};
 
-var Task = mongoose.models[MODEL_NAME] || mongoose.model(MODEL_NAME, taskSchema, "tasks");
+var Task = mongoose.models[MODEL_NAME] || mongoose.model(MODEL_NAME, taskSchema, COLLECTION_NAME);
 
 export default Task;

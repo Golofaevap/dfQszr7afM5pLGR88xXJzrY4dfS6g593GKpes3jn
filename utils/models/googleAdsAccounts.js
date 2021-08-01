@@ -1,8 +1,8 @@
 import mongoose from "mongoose";
 var Schema = mongoose.Schema;
 
-const MODEL_NAME = "Account";
-
+const MODEL_NAME = "GoogleAdsAccount";
+const COLLECTION_NAME = "googleadsaccounts";
 var accountSchema = new Schema(
     {
         accountId: { type: String, unique: true, required: true },
@@ -10,6 +10,22 @@ var accountSchema = new Schema(
         // campaigns links
         limitManual: { type: Number, default: 0 },
         limitAPI: { type: Number, default: 0 },
+        offer: { type: String, default: "" },
+        // notes: Array,
+        // historyLog2: Array,
+        stars: { type: Number, default: 0 },
+        session: {
+            type: Schema.Types.ObjectId,
+            ref: "account",
+        },
+        notes: [
+            {
+                dateOfNote: Date,
+                textOfNote: String,
+                colorOfNote: String,
+                iconId: String,
+            },
+        ],
         campaigns: [
             {
                 type: Schema.Types.ObjectId,
@@ -62,6 +78,6 @@ var accountSchema = new Schema(
 
 // mongoose.models = {};
 
-var Account = mongoose.models[MODEL_NAME] || mongoose.model(MODEL_NAME, accountSchema, "accounts");
+var Account = mongoose.models[MODEL_NAME] || mongoose.model(MODEL_NAME, accountSchema, COLLECTION_NAME);
 
 export default Account;

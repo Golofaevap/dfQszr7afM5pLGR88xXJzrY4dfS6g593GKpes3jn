@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 var Schema = mongoose.Schema;
 
 const MODEL_NAME = "Campaign";
+const COLLECTION_NAME = "campaigns";
 
 var campaignSchema = new Schema(
     {
@@ -60,6 +61,6 @@ var campaignSchema = new Schema(
 
 // mongoose.models = {};
 
-var Campaign = mongoose.models[MODEL_NAME] || mongoose.model(MODEL_NAME, campaignSchema, "campaigns");
+var Campaign = mongoose.models[MODEL_NAME] || mongoose.model(MODEL_NAME, campaignSchema, COLLECTION_NAME);
 
 export default Campaign;

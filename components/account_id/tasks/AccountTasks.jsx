@@ -7,6 +7,7 @@ import {
     Button,
     FormControl,
     Grid,
+    IconButton,
     Input,
     InputAdornment,
     InputLabel,
@@ -23,7 +24,10 @@ import getLocations from "../../../utils/enums/locations";
 import { TaskWrapper } from "./TaskWrapper";
 import { EditSaveGroup, NavButton, TasksList } from "./utils";
 // *******************************************************************
-
+// ******************************
+import StarBorderIcon from "@material-ui/icons/StarBorder";
+import StarIcon from "@material-ui/icons/Star";
+// ******************************
 const useStyles2 = makeStyles((theme) => ({
     formDivs: {
         marginTop: 10,
@@ -347,10 +351,38 @@ export function SetAddInfoToAccount({ account }) {
     const initialForm = {
         user: account.user ? account.user : "",
         limit: account.limitManual ? account.limitManual : 0,
+        offer: account.offer ? account.offer : "",
+        stars: account.stars ? account.stars : 0,
     };
     const [form, setForm] = useState(initialForm);
     const handleChangeText = (prop) => (event) => {
         setForm({ ...form, [prop]: event.target.value });
+    };
+
+    const OfferButton = ({ text, setForm, form }) => {
+        return (
+            <Button
+                onClick={() => {
+                    setForm({ ...form, offer: text });
+                }}
+            >
+                {text}
+            </Button>
+        );
+    };
+    const StarsButton = ({ setFrom, form, index }) => {
+        return (
+            <IconButton
+                color="primary"
+                aria-label="upload picture"
+                component="span"
+                onClick={() => {
+                    setForm({ ...form, stars: index });
+                }}
+            >
+                {form.stars >= index ? <StarIcon /> : <StarBorderIcon />}
+            </IconButton>
+        );
     };
     return (
         <Grid item xs={12}>
@@ -373,6 +405,60 @@ export function SetAddInfoToAccount({ account }) {
                         accountId={accountId}
                         type="number"
                     />
+                    <EditSaveGroup
+                        value={form.offer}
+                        handleChangeText={handleChangeText}
+                        fieldName="offer"
+                        label="Offer"
+                        accountId={accountId}
+                        type="text"
+                    />
+                    <div>
+                        <OfferButton text="JUR-RU" form={form} setForm={setForm} />
+                        <OfferButton text="AD-AT" form={form} setForm={setForm} />
+                        <OfferButton text="AD-IT" form={form} setForm={setForm} />
+                        <OfferButton text="AD-ES" form={form} setForm={setForm} />
+                        <OfferButton text="CRD-IT" form={form} setForm={setForm} />
+                    </div>
+                    <div>
+                        <h3>Stars count</h3>
+                        <div>
+                            <Grid container>
+                                <Grid item xs={8}>
+                                    <StarsButton index={1} form={form} setForm={setForm} />
+                                    <StarsButton index={2} form={form} setForm={setForm} />
+                                    <StarsButton index={3} form={form} setForm={setForm} />
+                                    <StarsButton index={4} form={form} setForm={setForm} />
+                                    <StarsButton index={5} form={form} setForm={setForm} />
+                                </Grid>
+                                <Grid item xs={4}>
+                                    <Button
+                                        style={{ height: "100%", width: "100%" }}
+                                        variant="contained"
+                                        color="primary"
+                                        onClick={async () => {
+                                            console.log("1");
+                                            const resp = await fetch("/api/accounts/edit", {
+                                                method: "POST",
+                                                body: JSON.stringify({
+                                                    operation: "stars",
+                                                    newValue: form.stars,
+                                                    accId: accountId,
+                                                }),
+                                                headers: {
+                                                    "Content-Type": "application/json",
+                                                },
+                                            });
+                                            const jsonBody = await resp.json();
+                                            console.log(jsonBody);
+                                        }}
+                                    >
+                                        Save
+                                    </Button>
+                                </Grid>
+                            </Grid>
+                        </div>
+                    </div>
                 </Grid>
             </Grid>
         </Grid>

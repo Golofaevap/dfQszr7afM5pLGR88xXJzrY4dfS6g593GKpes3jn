@@ -1,6 +1,6 @@
 import connectDB from "../../utils/mongodb";
 // import bcrypt from '../../middleware/bcrypt';
-import account from "../../utils/models/accounts";
+import account from "../../utils/models/googleAdsAccounts";
 import log from "../../utils/models/logs";
 
 const handler = async (req, res) => {

@@ -1,6 +1,6 @@
 import createHandler from "../../../utils/middleware";
 // import bcrypt from '../../middleware/bcrypt';
-import accountModel from "../../../utils/models/accounts";
+import accountModel from "../../../utils/models/googleAdsAccounts";
 import campaignModel from "../../../utils/models/campaigns";
 // import logModel from "../../../utils/models/logs";
 // const moment = require("moment");

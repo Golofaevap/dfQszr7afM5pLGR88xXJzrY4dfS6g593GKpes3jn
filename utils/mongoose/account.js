@@ -1,6 +1,6 @@
 const _ = require("lodash");
 
-const { default: account } = require("../models/accounts.js");
+const { default: account } = require("../models/googleAdsAccounts.js");
 
 // console.log("account = ", account);
 
