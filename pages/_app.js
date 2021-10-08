@@ -20,12 +20,13 @@ const MenuElement = ({ href, caption }) => {
 
 function MyApp({ Component, pageProps }) {
     return (
-        <Grid container style={{ minHeight: "100vh" }}>
+        <Grid container style={{ minHeight: "100vh", minWidth: "1200px" }}>
             <Grid item xs={1} style={{ backgroundColor: "skyblue" }}>
                 <Grid container>
                     <MenuElement href="/dashboard" caption="Dashboard" />
                     <MenuElement href="/bydate" caption="GAds by Date" />
                     <MenuElement href="/wizards" caption="Wizards" />
+                    <MenuElement href="/simplesessions" caption="simp-ses" />
 
                     <Grid item xs={12} style={buttonStyle}>
                         <Accordion

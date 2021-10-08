@@ -72,7 +72,7 @@ export default function Index(props) {
             </Grid>
             {addPhoneDialog ? (
                 <PopUpFormSkeleton closeDialog={setAddPhoneDialog}>
-                    <PhoneFromAdd></PhoneFromAdd>
+                    <PhoneFromAdd />
                 </PopUpFormSkeleton>
             ) : null}
         </Grid>

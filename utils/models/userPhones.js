@@ -9,7 +9,8 @@ var accountSchema = new Schema(
         used: { type: Boolean, default: false },
         phoneNumber: String,
         numbersOnly: String,
-
+        phoneCode: String,
+        country: String,
         note: String,
         tag: [{ type: String }],
         used: { type: Boolean, default: false },

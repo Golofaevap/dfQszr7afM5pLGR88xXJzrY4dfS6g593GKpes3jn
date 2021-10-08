@@ -8,16 +8,19 @@ var accountSchema = new Schema(
     {
         firstName: String,
         lastName: String,
+        empty: Number,
         adresses: [
             {
                 type: Schema.Types.ObjectId,
                 ref: "adresses",
             },
         ],
-        phoneNumber: [{
-            type: Schema.Types.ObjectId,
-            ref: "sessions",
-        }],
+        phoneNumber: [
+            {
+                type: Schema.Types.ObjectId,
+                ref: "sessions",
+            },
+        ],
 
         tags: [{ type: String }],
 

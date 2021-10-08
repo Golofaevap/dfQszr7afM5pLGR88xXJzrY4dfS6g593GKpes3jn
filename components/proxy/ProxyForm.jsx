@@ -12,56 +12,20 @@ const cellStyle = {
     marginTop: 10,
 };
 // ======================================================================================
-export function ProxyFromFields({
+// ======================================================================================
+export function ProxyFormGeneralBlock({
     proxyForm,
-    proxiesTypes,
-    defaultStatuses,
-    defaultTags,
-    handleChangeText,
     handleChangeProxyType,
     handleChangeProxyStatus,
-    handleChipChange,
     handleChangeProxyUsedStatus,
+    handleChipChange,
 }) {
     return (
         <>
-            <Grid item xs={12} style={cellStyle}>
-                <TextField
-                    fullWidth
-                    label="IP"
-                    value={proxyForm.ip}
-                    variant="outlined"
-                    onChange={handleChangeText("ip")}
-                />
+            <Grid item xs={4} style={cellStyle}>
+                Proxy Type
             </Grid>
-            <Grid item xs={12} style={cellStyle}>
-                <TextField
-                    fullWidth
-                    label="PORT"
-                    value={proxyForm.port}
-                    variant="outlined"
-                    onChange={handleChangeText("port")}
-                />
-            </Grid>
-            <Grid item xs={12} style={cellStyle}>
-                <TextField
-                    fullWidth
-                    label="Login"
-                    value={proxyForm.login}
-                    variant="outlined"
-                    onChange={handleChangeText("login")}
-                />
-            </Grid>
-            <Grid item xs={12} style={cellStyle}>
-                <TextField
-                    fullWidth
-                    label="Password"
-                    value={proxyForm.password}
-                    variant="outlined"
-                    onChange={handleChangeText("password")}
-                />
-            </Grid>
-            <Grid item xs={12} style={cellStyle}>
+            <Grid item xs={8} style={cellStyle}>
                 <Select
                     value={proxyForm.proxyType}
                     defaultValue={proxiesTypes[0]}
@@ -80,7 +44,10 @@ export function ProxyFromFields({
                         })}
                 </Select>
             </Grid>
-            <Grid item xs={12} style={cellStyle}>
+            <Grid item xs={4} style={cellStyle}>
+                Proxy Status
+            </Grid>
+            <Grid item xs={8} style={cellStyle}>
                 <Select
                     value={proxyForm.statusLive}
                     defaultValue={defaultStatuses[0]}
@@ -99,7 +66,10 @@ export function ProxyFromFields({
                         })}
                 </Select>
             </Grid>
-            <Grid item xs={12} style={cellStyle}>
+            <Grid item xs={4} style={cellStyle}>
+                Used?
+            </Grid>
+            <Grid item xs={8} style={cellStyle}>
                 <Select
                     value={proxyForm.used}
                     defaultValue={false}
@@ -134,57 +104,144 @@ export function ProxyFromFields({
 }
 // ======================================================================================
 // ======================================================================================
-
-export function ProxyFromAdd({ changeProxy }) {
-    const initProxyFrormState = {
-        ip: "",
-        port: "",
-        login: "",
-        password: "",
-        used: false,
-        statusLive: defaultStatuses[0],
-        proxyType: proxiesTypes[0],
-        tags: [new Date().toISOString().slice(0, 10)],
-    };
-    const [newProxies, setNewProxies] = useState([]);
-    // const newProxies2 = [];
-    // console.log(newProxies);
-    const [proxyForm, setProxyForm] = useState(changeProxy ? changeProxy : initProxyFrormState);
-
-    const handleChangeText = (prop) => (event) => {
-        setProxyForm({ ...proxyForm, [prop]: event.target.value });
-    };
-    const handleChangeProxyType = (event) => {
-        setProxyForm({ ...proxyForm, proxyType: event.target.value });
-    };
-    const handleChangeProxyStatus = (event) => {
-        setProxyForm({ ...proxyForm, statusLive: event.target.value });
-    };
-    const handleChangeProxyUsedStatus = (event) => {
-        setProxyForm({ ...proxyForm, used: event.target.value });
-    };
-
-    const handleChipChange = (event, values) => {
-        setProxyForm({ ...proxyForm, tags: values });
-    };
+export function ProxyFormSingleInput({ proxyForm, handleChangeText }) {
     return (
-        <Grid container style={{ padding: 10 }}>
-            <ProxyFromFields
+        <>
+            <Grid item xs={8} style={cellStyle}>
+                <Grid container>
+                    <Grid item xs={12} style={cellStyle}>
+                        <div>Single Adding</div>
+                    </Grid>
+                </Grid>
+            </Grid>
+            <Grid item xs={6} style={cellStyle}>
+                <TextField
+                    fullWidth
+                    label="IP"
+                    value={proxyForm.ip}
+                    variant="outlined"
+                    onChange={handleChangeText("ip")}
+                />
+            </Grid>
+            <Grid item xs={6} style={cellStyle}>
+                <TextField
+                    fullWidth
+                    label="PORT"
+                    value={proxyForm.port}
+                    variant="outlined"
+                    onChange={handleChangeText("port")}
+                />
+            </Grid>
+            <Grid item xs={6} style={cellStyle}>
+                <TextField
+                    fullWidth
+                    label="Login"
+                    value={proxyForm.login}
+                    variant="outlined"
+                    onChange={handleChangeText("login")}
+                />
+            </Grid>
+            <Grid item xs={6} style={cellStyle}>
+                <TextField
+                    fullWidth
+                    label="Password"
+                    value={proxyForm.password}
+                    variant="outlined"
+                    onChange={handleChangeText("password")}
+                />
+            </Grid>
+        </>
+    );
+}
+// ======================================================================================
+// ======================================================================================
+export function ProxyFormMassInput({
+    proxyForm,
+    handleMassTextField,
+    // proxiesTypes, defaultStatuses, defaultTags
+}) {
+    return (
+        <>
+            <Grid item xs={8} style={cellStyle}>
+                <Grid container>
+                    <Grid item xs={6} style={cellStyle}>
+                        <div>Bulk Adding</div>
+                    </Grid>
+                    <Grid item xs={6} style={cellStyle}>
+                        <div>ip : port : user : pasword</div>
+                        <div>Only such format is supported</div>
+                    </Grid>
+                </Grid>
+            </Grid>
+            <Grid item xs={12} style={cellStyle}>
+                <TextField
+                    multiline
+                    rowsMax={10}
+                    fullWidth
+                    rows={5}
+                    variant="outlined"
+                    value={proxyForm.mass}
+                    onChange={handleMassTextField}
+                />
+            </Grid>
+        </>
+    );
+}
+// ======================================================================================
+// ======================================================================================
+export function ProxyFromFields({
+    proxyForm,
+    // proxiesTypes,
+    // defaultStatuses,
+    // defaultTags,
+    handleChangeText,
+    handleChangeProxyType,
+    handleChangeProxyStatus,
+    handleChipChange,
+    handleChangeProxyUsedStatus,
+    handleMassTextField,
+    newProxies,
+    setNewProxies,
+    setProxyForm,
+    initProxyFrormState,
+}) {
+    const [showShort, setShowShort] = useState(true);
+    return (
+        <>
+            <Grid item xs={4} style={cellStyle}>
+                <Button
+                    variant="outlined"
+                    color="default"
+                    style={{ marginRight: 10 }}
+                    onClick={() => setShowShort(!showShort)}
+                >
+                    Single / bulk
+                </Button>
+            </Grid>
+            {showShort ? (
+                <ProxyFormSingleInput proxyForm={proxyForm} handleChangeText={handleChangeText} />
+            ) : (
+                <ProxyFormMassInput
+                    proxyForm={proxyForm}
+                    handleMassTextField={handleMassTextField}
+                    // proxiesTypes={proxiesTypes}
+                    // defaultStatuses={defaultStatuses}
+                    // defaultTags={defaultTags}
+                />
+            )}
+            <ProxyFormGeneralBlock
                 proxyForm={proxyForm}
-                proxiesTypes={proxiesTypes}
-                defaultStatuses={defaultStatuses}
-                defaultTags={defaultTags}
-                handleChangeText={handleChangeText}
                 handleChangeProxyType={handleChangeProxyType}
                 handleChangeProxyStatus={handleChangeProxyStatus}
-                handleChipChange={handleChipChange}
                 handleChangeProxyUsedStatus={handleChangeProxyUsedStatus}
+                handleChipChange={handleChipChange}
             />
-            <Grid item xs={12} style={cellStyle}>
-                {!changeProxy ? (
+            {showShort ? (
+                <Grid item xs={12} style={cellStyle}>
                     <Button
                         variant="contained"
                         color="primary"
+                        // disabled={!showShort}
                         style={{ marginRight: 10 }}
                         onClick={() => {
                             {
@@ -203,7 +260,118 @@ export function ProxyFromAdd({ changeProxy }) {
                     >
                         Add
                     </Button>
-                ) : null}
+                </Grid>
+            ) : (
+                <Button
+                    variant="contained"
+                    color="primary"
+                    style={{ marginRight: 10 }}
+                    onClick={() => {
+                        if (!proxyForm.mass) {
+                            alert("TEXT FIELD IS EMPTY!");
+                            return;
+                        }
+
+                        const rows = proxyForm.mass.split("\n");
+                        for (let i in rows) {
+                            rows[i].replace(" ", "");
+                            const ents = rows[i].split(":");
+                            if (ents.length !== 4) {
+                                alert(`Row ${Number(i) + 1}. Check proxy. Wait for 4 parameters. Got ${ents.length}`);
+                                return;
+                            }
+                            const newProxyForm_ = { ...proxyForm };
+                            newProxyForm_.ip = ents[0];
+                            newProxyForm_.port = ents[1];
+                            newProxyForm_.login = ents[2];
+                            newProxyForm_.password = ents[3];
+                            if (newProxyForm_.ip.length < 8) {
+                                alert(`Row ${Number(i) + 1}. Проверьте IP. (Минимум 8 знаков) ${newProxyForm_.ip}`);
+                                // alert("");
+                                return;
+                            }
+                            const _np = [...newProxies];
+                            _np.push(newProxyForm_);
+                            setNewProxies(_np);
+                            // newProxies2.push(proxyForm);
+                            setProxyForm(initProxyFrormState);
+                            // console.log(newProxies);
+                        }
+                    }}
+                >
+                    Parse
+                </Button>
+            )}
+        </>
+    );
+}
+
+// ======================================================================================
+// ======================================================================================
+export function ProxyFromAddDraft2({ newProxies, setNewProxies }) {
+    const initProxyFrormState = {
+        mass: "",
+        ip: "",
+        port: "",
+        login: "",
+        password: "",
+        used: false,
+        statusLive: defaultStatuses[0],
+        proxyType: proxiesTypes[0],
+        tags: [new Date().toISOString().slice(0, 10)],
+    };
+    // const [proxyForm, setProxyForm] = useState(changeProxy ? changeProxy : initProxyFrormState);
+    const [proxyForm, setProxyForm] = useState(initProxyFrormState);
+    // const [bulkProxies, setBulkProxies] = useState("");
+
+    const handleMassTextField = (e) => {
+        setProxyForm({ ...proxyForm, ["mass"]: event.target.value });
+    };
+    const handleChangeText = (prop) => (event) => {
+        setProxyForm({ ...proxyForm, [prop]: event.target.value });
+    };
+    const handleChangeProxyType = (event) => {
+        setProxyForm({ ...proxyForm, proxyType: event.target.value });
+    };
+    const handleChangeProxyStatus = (event) => {
+        setProxyForm({ ...proxyForm, statusLive: event.target.value });
+    };
+    const handleChangeProxyUsedStatus = (event) => {
+        setProxyForm({ ...proxyForm, used: event.target.value });
+    };
+
+    const handleChipChange = (event, values) => {
+        setProxyForm({ ...proxyForm, tags: values });
+    };
+    return (
+        <>
+            <ProxyFromFields
+                proxyForm={proxyForm}
+                handleChangeText={handleChangeText}
+                handleChangeProxyType={handleChangeProxyType}
+                handleChangeProxyStatus={handleChangeProxyStatus}
+                handleChipChange={handleChipChange}
+                handleChangeProxyUsedStatus={handleChangeProxyUsedStatus}
+                handleMassTextField={handleMassTextField}
+                newProxies={newProxies}
+                setNewProxies={setNewProxies}
+                setProxyForm={setProxyForm}
+                initProxyFrormState={initProxyFrormState}
+            />
+        </>
+    );
+}
+// ======================================================================================
+// ======================================================================================
+export function ProxyFromAdd({ changeProxy }) {
+    const [newProxies, setNewProxies] = useState([]);
+    // const newProxies2 = [];
+    // console.log(newProxies);
+
+    return (
+        <Grid container style={{ padding: 10 }}>
+            <ProxyFromAddDraft2 newProxies={newProxies} setNewProxies={setNewProxies} />
+            <Grid item xs={12} style={cellStyle}>
                 <Button
                     variant="contained"
                     color="secondary"
@@ -217,8 +385,14 @@ export function ProxyFromAdd({ changeProxy }) {
                             },
                             body: JSON.stringify(newProxies),
                         });
-                        // const rJson = await response.json();
-                        // console.log(rJons);
+                        const rJson = await response.json();
+                        console.log(rJson);
+                        if (rJson.ok) {
+                            setNewProxies([]);
+                            console.log(rJson.message);
+                        } else {
+                            alert(rJson.message);
+                        }
                     }}
                 >
                     Save

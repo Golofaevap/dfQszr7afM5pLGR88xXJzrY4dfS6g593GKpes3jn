@@ -32,7 +32,6 @@ export default function Test() {
                 <hr />
                 <h4>Phone</h4>
                 <p>{d.phone}</p>
-                
             </div>
         </div>
     );
